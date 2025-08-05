@@ -2,25 +2,13 @@
 
 Here’s a comprehensive breakdown of the ServiceNow interview questions I was asked. Trying to collate all answers with explanations, practical examples, and reference links for deeper exploration.
 
-Explain the discovery process....What are Discovery Phases? 
-Which phase do authentication happen? What to do when Firewall is discovered as Network Switch? 
-What to do when Windows server is discovered as Computer? 
-What ports are required for Windows, Linux, Network devices? 
-What are pre-requisites for Service Mapping? 
-What are different methods used for service mapping? 
-What are traversal rules and where are they used? How Agent Client Collector Discovery works? 
-How do the connection happen? Can Agent client collector can be used on more than one instance? 
-What's the difference between ACC & Horizontal Discovery? 
-What's the difference between UI Policy & Client Script?
-
 ---
 
-## 🔍 Discovery Process & Phases
+# Explain the discovery process....What are Discovery Phases?
 
-### What is the Discovery Process?
 ServiceNow Discovery identifies devices and applications on your network and populates the Configuration Management Database (CMDB) with their details and relationships.
 
-### 🔄 Discovery Phases
+## 🔄 Discovery Phases
 There are **four main phases**:
 1. **Scanning**: Uses the Shazzam probe to detect active IPs and open ports.
 2. **Classification**: Determines the type of device (e.g., Windows, Linux) based on port responses.
@@ -30,7 +18,7 @@ There are **four main phases**:
 🔗 [Discovery Phases Explained](https://www.servicenow.com/community/itom-articles/understand-phases-of-discovery/ta-p/3116984)
 
 ---
-
+# Which phase do authentication happen
 ## 🔐 Authentication Phase
 
 Authentication typically occurs during the **Classification phase**, when probes like WMI (Windows) or SSH (Linux) are sent to gather OS-specific data. Credentials are validated at this point.
@@ -38,7 +26,7 @@ Authentication typically occurs during the **Classification phase**, when probes
 🔗 [Credential Troubleshooting Guide](https://support.servicenow.com/kb?id=kb_article_view&sysparm_article=KB0657528)
 
 ---
-
+# What to do when Firewall is discovered as Network Switch?
 ## 🔥 Firewall Discovered as Network Switch
 
 This misclassification often happens due to SNMP OID mismatches or missing MIB files.
@@ -51,7 +39,7 @@ This misclassification often happens due to SNMP OID mismatches or missing MIB f
 🔗 [Firewall Discovery Issues](https://www.servicenow.com/community/itom-forum/firewall-switch-discovery-issues/td-p/1017535)
 
 ---
-
+# What to do when Windows server is discovered as Computer?
 ## 🖥️ Windows Server Discovered as Computer
 
 This occurs when the OS version isn’t mapped in the classification rules.
@@ -63,7 +51,7 @@ This occurs when the OS version isn’t mapped in the classification rules.
 🔗 [Windows Server Classification Fix](https://support.servicenow.com/kb?id=kb_article_view&sysparm_article=KB1119932)
 
 ---
-
+# What ports are required for Windows, Linux, Network devices?
 ## 🌐 Required Ports for Discovery
 
 | Device Type     | Protocol | Port(s)        |
@@ -78,8 +66,8 @@ This occurs when the OS version isn’t mapped in the classification rules.
 🔗 [Port Requirements](https://www.servicenow.com/community/developer-forum/what-are-the-tcp-port-used-while-doing-a-discovery/m-p/3066630)
 
 ---
-
- 🧭 Service Mapping
+# What are pre-requisites for Service Mapping?
+## 🧭 Service Mapping
 
 ### 🔧 Prerequisites:
 - MID Server installed and running
@@ -89,6 +77,7 @@ This occurs when the OS version isn’t mapped in the classification rules.
 
 🔗 [Service Mapping Setup Guide](https://www.servicenow.com/community/itom-articles/step-by-step-quick-guide-on-service-mapping-for-dummies/ta-p/2957101)
 
+# What are different methods used for service mapping?
 ### 🛠️ Methods Used:
 - **Top-down mapping**: Starts from entry point (URL) and traces dependencies.
 - **Tag-based mapping**: Uses cloud resource tags.
@@ -98,7 +87,7 @@ This occurs when the OS version isn’t mapped in the classification rules.
 🔗 [Service Mapping Methods](https://www.servicenow.com/products/it-operations-management/what-is-service-mapping.html)
 
 ---
-
+# What are traversal rules and where are they used? How Agent Client Collector Discovery works? 
 ## 🔄 Traversal Rules
 
 Traversal rules define relationships between CIs during tag-based service mapping.
@@ -111,7 +100,7 @@ Traversal rules define relationships between CIs during tag-based service mappin
 🔗 [Traversal Rules Documentation](https://www.servicenow.com/docs/bundle/washingtondc-it-operations-management/page/product/service-mapping/reference/traversal_rules_form_completion.html)
 
 ---
-
+# How do the connection happen? Can Agent client collector can be used on more than one instance?
 ## 🧠 Agent Client Collector (ACC)
 
 ### 🔍 How It Works:
@@ -135,7 +124,7 @@ ACC **cannot** be connected to multiple ServiceNow instances simultaneously. You
 🔗 [ACC Multi-Instance Limitation](https://support.servicenow.com/kb?id=kb_article_view&sysparm_article=KB1162869)
 
 ---
-
+# What's the difference between ACC & Horizontal Discovery?
 ## ⚔️ ACC vs Horizontal Discovery
 
 | Feature                  | ACC                            | Horizontal Discovery           |
@@ -149,8 +138,8 @@ ACC **cannot** be connected to multiple ServiceNow instances simultaneously. You
 🔗 [ACC vs Horizontal Discovery](https://www.servicenow.com/community/itom-forum/agent-client-collector-vs-horizontal-discovery/m-p/2878272)
 
 ---
-
-🧩 UI Policy vs Client Script
+# What's the difference between UI Policy & Client Script?
+## 🧩 UI Policy vs Client Script
 
 | Feature               | UI Policy                        | Client Script                   |
 |----------------------|----------------------------------|----------------------------------|
@@ -163,5 +152,3 @@ ACC **cannot** be connected to multiple ServiceNow instances simultaneously. You
 🔗 [UI Policy vs Client Script Comparison](https://www.servicenow.com/community/developer-forum/client-script-vs-ui-policy-explained/m-p/3040372)
 
 ---
-
-Would you like me to compile this into a formatted study guide or prep sheet?
