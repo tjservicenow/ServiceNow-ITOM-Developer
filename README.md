@@ -152,3 +152,4 @@ ACC **cannot** be connected to multiple ServiceNow instances simultaneously. You
 🔗 [UI Policy vs Client Script Comparison](https://www.servicenow.com/community/developer-forum/client-script-vs-ui-policy-explained/m-p/3040372)
 
 ---
+
