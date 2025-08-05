@@ -1,167 +1,166 @@
-# ServiceNow-ITOM-Developer
 
-Here’s a comprehensive breakdown of the ServiceNow interview questions I was asked. Trying to collate all answers with explanations, practical examples, and reference links for deeper exploration.
+## ServiceNow MID Server Performance
 
-Explain the discovery process....What are Discovery Phases? 
-Which phase do authentication happen? What to do when Firewall is discovered as Network Switch? 
-What to do when Windows server is discovered as Computer? 
-What ports are required for Windows, Linux, Network devices? 
-What are pre-requisites for Service Mapping? 
-What are different methods used for service mapping? 
-What are traversal rules and where are they used? How Agent Client Collector Discovery works? 
-How do the connection happen? Can Agent client collector can be used on more than one instance? 
-What's the difference between ACC & Horizontal Discovery? 
-What's the difference between UI Policy & Client Script?
+### Q: How do I check and maintain ServiceNow MID Server Performance?
+**A:** To check and maintain the performance of a ServiceNow MID Server, follow these steps:
 
----
+1. **Monitoring**: Use the "MID Server Dashboard" in ServiceNow to monitor the performance metrics like memory usage, CPU utilization, and thread count.
+2. **Log Analysis**: Review the MID Server logs for warnings or errors.
+3. **Upgrade**: Keep the MID Server updated with the latest version.
+4. **Scaling**: Monitor the number of threads and connections and scale up or add additional MID servers if necessary.
+5. **Health Dashboard**: Utilize the MID Server Health Dashboard to monitor the health and performance of the MID Server.
 
-## 🔍 Discovery Process & Phases
+*Reference URL: [ServiceNow MID Server Health Dashboard](https://docs.servicenow.com/bundle/utah-it-operations-management/page/administer/mid-server/concept/mid-server-health-dashboard.html)*
 
-### What is the Discovery Process?
-ServiceNow Discovery identifies devices and applications on your network and populates the Configuration Management Database (CMDB) with their details and relationships.
+### Q: What are ServiceNow MID server parameters?
+**A:** Common MID Server parameters include:
 
-### 🔄 Discovery Phases
-There are **four main phases**:
-1. **Scanning**: Uses the Shazzam probe to detect active IPs and open ports.
-2. **Classification**: Determines the type of device (e.g., Windows, Linux) based on port responses.
-3. **Identification**: Matches discovered items to existing CIs in the CMDB using Identification Rules.
-4. **Exploration**: Gathers detailed information about the device, including software, hardware, and relationships.
+1. **mid.poll_interval**: Determines how frequently the MID Server polls the ServiceNow instance for jobs.
+2. **mid.max_threads**: Sets the maximum number of concurrent threads running on the MID Server.
+3. **mid.log.level**: Controls the logging level, e.g., DEBUG, INFO, WARN, ERROR.
 
-🔗 [Discovery Phases Explained](https://www.servicenow.com/community/itom-articles/understand-phases-of-discovery/ta-p/3116984)
+*Reference URL: [MID Server Configuration Parameters](https://docs.servicenow.com/bundle/utah-it-operations-management/page/administer/mid-server/reference/mid-server-config-parameters.html)*
 
----
+## ServiceNow Discovery Troubleshooting
 
-## 🔐 Authentication Phase
+### Q: How would you troubleshoot ServiceNow Discovery Shazzam issue?
+**A:** Troubleshooting the Shazzam issue involves:
 
-Authentication typically occurs during the **Classification phase**, when probes like WMI (Windows) or SSH (Linux) are sent to gather OS-specific data. Credentials are validated at this point.
+1. **Review Logs**: Check Shazzam logs for errors.
+2. **Network Connectivity**: Ensure network connectivity and firewall rules allow Shazzam port scanning.
+3. **Shazzam Probe Configuration**: Verify the Shazzam probe configuration is correct.
+4. **Permissions**: Ensure the MID Server has the necessary permissions.
 
-🔗 [Credential Troubleshooting Guide](https://support.servicenow.com/kb?id=kb_article_view&sysparm_article=KB0657528)
+*Reference URL: [Troubleshooting Shazzam issues](https://docs.servicenow.com/bundle/utah-it-operations-management/page/product/discovery/reference/troubleshooting-shazzam-issues.html)*
 
----
+### Q: How are discovery logs useful to trace discovery errors and remediate?
+**A:** Discovery logs provide detailed information about each step in the discovery process, including:
 
-## 🔥 Firewall Discovered as Network Switch
+1. **Errors and Warnings**: Identifying issues and errors in discovery.
+2. **Execution Details**: Understanding the sequence of events and probes executed.
+3. **Data Analysis**: Analyzing returned data for anomalies or inconsistencies.
 
-This misclassification often happens due to SNMP OID mismatches or missing MIB files.
+The logs facilitate root cause analysis and remediation by pinpointing where and why errors occur.
 
-### ✅ What to Do:
-- Check SNMP credentials and ensure correct OID mapping.
-- Add custom classifiers or update existing ones to properly identify firewalls.
-- Validate SNMPwalk results to confirm device identity.
+*Reference URL: [Discovery Logs](https://docs.servicenow.com/bundle/utah-it-operations-management/page/product/discovery/concept/discovery-logs.html)*
 
-🔗 [Firewall Discovery Issues](https://www.servicenow.com/community/itom-forum/firewall-switch-discovery-issues/td-p/1017535)
+### Q: How would you fix ServiceNow Discovery payload issues?
+**A:** To address payload issues:
 
----
+1. **Analyze Logs**: Review the logs for payload errors.
+2. **Data Payload Size**: Reduce the size of the payload if it's too large.
+3. **Data Normalization**: Ensure data is properly formatted.
+4. **Probes and Sensors**: Adjust probes and sensors if needed.
 
-## 🖥️ Windows Server Discovered as Computer
+*Reference URL: [Troubleshooting Discovery Payload Issues](https://docs.servicenow.com/bundle/utah-it-operations-management/page/product/discovery/reference/troubleshooting-discovery-payload.html)*
 
-This occurs when the OS version isn’t mapped in the classification rules.
+### Q: What would you do to troubleshoot an active discovery run but not running discovery?
+**A:** Steps to troubleshoot:
 
-### ✅ Resolution:
-- Create or update classifiers for specific Windows Server versions.
-- Adjust the classifier order to ensure server-specific rules take precedence over generic ones.
+1. **Check Discovery Schedule**: Ensure the schedule is set correctly.
+2. **Verify Status**: Check if the discovery is in progress or if it's stuck.
+3. **MID Server Health**: Ensure the MID Server is active and healthy.
+4. **Network Connectivity**: Confirm network connectivity to target systems.
 
-🔗 [Windows Server Classification Fix](https://support.servicenow.com/kb?id=kb_article_view&sysparm_article=KB1119932)
+*Reference URL: [Troubleshooting Discovery Runs](https://docs.servicenow.com/bundle/utah-it-operations-management/page/product/discovery/reference/troubleshooting-discovery-runs.html)*
 
----
+## MID Server and Integration
 
-## 🌐 Required Ports for Discovery
+### Q: How to measure MID Server count for an organization?
+**A:** You can measure the MID Server count by:
 
-| Device Type     | Protocol | Port(s)        |
-|-----------------|----------|----------------|
-| Windows         | WMI      | 135, 49152–65535 |
-| Linux/Unix      | SSH      | 22             |
-| Network Devices | SNMP     | 161 (UDP)      |
-| Web Services    | HTTP/S   | 80, 443        |
-| SQL Server      | TCP      | 1433           |
-| Oracle DB       | TCP      | 1521           |
+1. **MID Server Dashboard**: Use the MID Server Dashboard to see all active MID Servers.
+2. **API**: Utilize the ServiceNow API to query the `ecc_agent` table.
 
-🔗 [Port Requirements](https://www.servicenow.com/community/developer-forum/what-are-the-tcp-port-used-while-doing-a-discovery/m-p/3066630)
+*Reference URL: [MID Server Dashboard](https://docs.servicenow.com/bundle/utah-it-operations-management/page/administer/mid-server/concept/mid-server-dashboard.html)*
 
----
+### Q: What are the most common integration issues and error codes admins mostly encounter?
+**A:** Common issues include:
 
- 🧭 Service Mapping
+1. **Authentication Failures**: Invalid credentials or lack of permissions.
+2. **Network Errors**: Connectivity problems.
+3. **Data Format Errors**: Mismatched data formats.
 
-### 🔧 Prerequisites:
-- MID Server installed and running
-- Valid credentials (SSH, SNMP, WMI, etc.)
-- Discovery plugin enabled
-- Proper roles: `sm_admin`, `sm_user`, `sm_app_owner`
+Common error codes are `401` (Unauthorized), `404` (Not Found), and `500` (Internal Server Error).
 
-🔗 [Service Mapping Setup Guide](https://www.servicenow.com/community/itom-articles/step-by-step-quick-guide-on-service-mapping-for-dummies/ta-p/2957101)
+*Reference URL: [Integration Error Codes](https://docs.servicenow.com/bundle/utah-it-operations-management/page/integrate/integration-hub/concept/integration-hub-error-codes.html)*
 
-### 🛠️ Methods Used:
-- **Top-down mapping**: Starts from entry point (URL) and traces dependencies.
-- **Tag-based mapping**: Uses cloud resource tags.
-- **Traffic-based mapping**: Uses network traffic to infer relationships.
-- **Service Mesh mapping**: For microservices environments.
+### Q: Can we discover SSH with Windows?
+**A:** Yes, you can use the ServiceNow MID Server installed on a Windows machine to perform SSH discovery using the appropriate credentials and probes.
 
-🔗 [Service Mapping Methods](https://www.servicenow.com/products/it-operations-management/what-is-service-mapping.html)
+*Reference URL: [SSH Discovery](https://docs.servicenow.com/bundle/utah-it-operations-management/page/product/discovery/concept/ssh-discovery.html)*
 
----
+## Other ServiceNow Topics
 
-## 🔄 Traversal Rules
+### Q: What is Glide API and what are its uses?
+**A:** Glide API is a set of JavaScript APIs provided by ServiceNow to interact with the platform's database, manage records, and perform various operations.
 
-Traversal rules define relationships between CIs during tag-based service mapping.
+*Reference URL: [Glide API](https://docs.servicenow.com/bundle/utah-platform-user-interface/page/script/glide-api/reference/glide-api.html)*
 
-### 📌 Usage:
-- Used in **tag-based mapping** to build service maps.
-- Define parent-child relationships (e.g., Linux Server → Storage Device).
-- Configured in the **Traversal Rules for Application Services** form.
+### Q: What are duplicate CIs and how to remediate?
+**A:** Duplicate Configuration Items (CIs) are multiple records representing the same entity. They are remediated by:
 
-🔗 [Traversal Rules Documentation](https://www.servicenow.com/docs/bundle/washingtondc-it-operations-management/page/product/service-mapping/reference/traversal_rules_form_completion.html)
+1. **Identification Rules**: Defining unique identifiers.
+2. **Reconciliation Rules**: Merging or deleting duplicates.
 
----
+*Reference URL: [Managing Duplicate CIs](https://docs.servicenow.com/bundle/utah-it-operations-management/page/product/discovery/concept/managing-duplicate-cis.html)*
 
-## 🧠 Agent Client Collector (ACC)
+### Q: What's the difference between table.* and table./? Provide examples
+**A:** `table.*` grants access to all fields in a table, while `table./` grants access to records without any fields. Example: `incident.*` allows access to all fields in the incident table, whereas `incident./` allows access to incident records without fields.
 
-### 🔍 How It Works:
-- Installed on target machines (Windows, Linux, macOS).
-- Collects system data and pushes it to ServiceNow via MID Server.
-- No need for credentials or IP scanning.
+*Reference URL: [Table Access Control](https://docs.servicenow.com/bundle/utah-platform-security/page/administer/security/concept/c_AccessControlList.html)*
 
-### 🔗 Connection Process:
-- ACC agent connects to MID Server via WebSocket (port 8433).
-- Uses API keys for secure communication.
-- Data is sent to CMDB in a push-based model.
+### Q: Is table.* enough for ACL?
+**A:** `table.*` provides broad access, which might not be secure. It's recommended to use more granular ACLs for specific fields or operations.
 
-🔗 [ACC Setup Guide](https://www.servicenow.com/community/itom-articles/discovery-with-agent-client-collector-step-by-step-configuration/ta-p/2324008)
+*Reference URL: [Access Control Best Practices](https://docs.servicenow.com/bundle/utah-platform-security/page/administer/security/concept/c_ACLBestPractices.html)*
 
----
+### Q: How to check active users through ServiceNow scripting?
+**A:** Use the `GlideSession` API to check active users:
 
-## 🖥️ ACC on Multiple Instances
+```javascript
+var user = gs.getSession().getUserName();
+gs.info("Active User: " + user);
+```
 
-ACC **cannot** be connected to multiple ServiceNow instances simultaneously. You must install separate agents for each instance or dedicate specific hosts for testing.
+*Reference URL: [GlideSession](https://docs.servicenow.com/bundle/utah-platform-user-interface/page/script/glide-api/reference/glide-session.html)*
 
-🔗 [ACC Multi-Instance Limitation](https://support.servicenow.com/kb?id=kb_article_view&sysparm_article=KB1162869)
+### Q: How to do read-only attribute using ACL?
+**A:** Create a read-only ACL by setting the `write` operation to false for the desired field or table.
 
----
+*Reference URL: [Read-only ACL](https://docs.servicenow.com/bundle/utah-platform-security/page/administer/security/task/t_CreateAccessControlListRule.html)*
 
-## ⚔️ ACC vs Horizontal Discovery
+### Q: How to define mandatory in ACL?
+**A:** Use the `setMandatory` method in the UI policy or script to enforce a field as mandatory.
 
-| Feature                  | ACC                            | Horizontal Discovery           |
-|--------------------------|--------------------------------|--------------------------------|
-| Type                     | Agent-based                    | Agentless                     |
-| Security                 | No credentials needed          | Requires credentials          |
-| Data Collection          | Push-based                     | Pull-based                    |
-| Coverage                 | Endpoints, workstations        | Servers, network devices      |
-| Service Mapping Support  | Limited                        | Full support                  |
+*Reference URL: [Mandatory Fields](https://docs.servicenow.com/bundle/utah-platform-administration/page/administer/form-administration/task/create-ui-policy.html)*
 
-🔗 [ACC vs Horizontal Discovery](https://www.servicenow.com/community/itom-forum/agent-client-collector-vs-horizontal-discovery/m-p/2878272)
+### Q: How and where to debug code in ServiceNow?
+**A:** Use the Script Debugger, available in the ServiceNow UI, to debug server-side scripts and client scripts.
 
----
+*Reference URL: [Script Debugger](https://docs.servicenow.com/bundle/utah-platform-user-interface/page/administer/script/debugging-scripts.html)*
 
-🧩 UI Policy vs Client Script
+### Q: What is data certification and how have you executed or implemented it at your organization?
+**A:** Data certification involves validating and ensuring the accuracy of data in ServiceNow. It can be implemented using certification tasks and schedules.
 
-| Feature               | UI Policy                        | Client Script                   |
-|----------------------|----------------------------------|----------------------------------|
-| Coding Required      | No                               | Yes (JavaScript)                |
-| Trigger Events       | onLoad, onChange                 | onLoad, onChange, onSubmit      |
-| Use Case             | Field visibility, mandatory      | Complex logic, validation       |
-| Execution Order      | After Client Script              | Before UI Policy                |
-| Access to Old Value  | No                               | Yes (onChange)                  |
+*Reference URL: [Data Certification](https://docs.servicenow.com/bundle/utah-platform-administration/page/administer/data-certification/concept/c_DataCertification.html)*
 
-🔗 [UI Policy vs Client Script Comparison](https://www.servicenow.com/community/developer-forum/client-script-vs-ui-policy-explained/m-p/3040372)
+### Q: What is ServiceNow ITOM Event Management?
+**A:** ITOM Event Management in ServiceNow helps monitor and manage events and alerts from different sources to identify and resolve issues.
 
----
+*Reference URL: [ITOM Event Management](https://docs.servicenow.com/bundle/utah-it-operations-management/page/product/event-management/concept/c_ITOMEventManagementLandingPage.html)*
 
-Would you like me to compile this into a formatted study guide or prep sheet?
+### Q: How are identification rule and reconciliation rule related to duplicate CIs?
+**A:** Identification rules define criteria for unique CIs, while reconciliation rules resolve conflicts between duplicate CIs.
+
+*Reference URL: [Identification and Reconciliation Rules](https://docs.servicenow.com/bundle/utah-it-operations-management/page/product/discovery/concept/identification-and-reconciliation-rules.html)*
+
+### Q: What are the causes of 2 CI with the same name and override and how to fix it?
+**A:** Causes include incorrect identification rules or data entry errors. Fix by adjusting identification rules, using reconciliation rules, or manually merging CIs.
+
+*Reference URL: [Resolving Duplicate CIs](https://docs.servicenow.com/bundle/utah-it-operations-management/page/product/discovery/concept/resolving-duplicate-cis.html)*
+
+### Q: What is ServiceNow Discovery credential and how to configure it?
+**A:** Discovery credentials are used to authenticate and access target systems during discovery. Configure them in the ServiceNow Credential Management module.
+
+*Reference URL: [Configuring Discovery Credentials](https://docs.servicenow.com/bundle/utah-it-operations-management/page/product/discovery/concept/configuring-discovery-credentials.html)*
