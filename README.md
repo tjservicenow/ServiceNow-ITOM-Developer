@@ -1,8 +1,17 @@
 # ServiceNow-ITOM-Developer
-Interview questions I have come across and answers which were helpful
 
+Here’s a comprehensive breakdown of the ServiceNow interview questions I was asked. Trying to collate all answers with explanations, practical examples, and reference links for deeper exploration.
 
-Here’s a comprehensive breakdown of the ServiceNow interview questions you asked, complete with explanations, practical examples, and reference links for deeper exploration.
+Explain the discovery process....What are Discovery Phases? 
+Which phase do authentication happen? What to do when Firewall is discovered as Network Switch? 
+What to do when Windows server is discovered as Computer? 
+What ports are required for Windows, Linux, Network devices? 
+What are pre-requisites for Service Mapping? 
+What are different methods used for service mapping? 
+What are traversal rules and where are they used? How Agent Client Collector Discovery works? 
+How do the connection happen? Can Agent client collector can be used on more than one instance? 
+What's the difference between ACC & Horizontal Discovery? 
+What's the difference between UI Policy & Client Script?
 
 ---
 
