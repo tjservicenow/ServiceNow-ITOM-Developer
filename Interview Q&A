@@ -1,0 +1,154 @@
+Here’s a comprehensive breakdown of the ServiceNow interview questions you asked, complete with explanations, practical examples, and reference links for deeper exploration.
+
+---
+
+## 🔍 Discovery Process & Phases
+
+### What is the Discovery Process?
+ServiceNow Discovery identifies devices and applications on your network and populates the Configuration Management Database (CMDB) with their details and relationships.
+
+### 🔄 Discovery Phases
+There are **four main phases**:
+1. **Scanning**: Uses the Shazzam probe to detect active IPs and open ports.
+2. **Classification**: Determines the type of device (e.g., Windows, Linux) based on port responses.
+3. **Identification**: Matches discovered items to existing CIs in the CMDB using Identification Rules.
+4. **Exploration**: Gathers detailed information about the device, including software, hardware, and relationships.
+
+🔗 [Discovery Phases Explained](https://www.servicenow.com/community/itom-articles/understand-phases-of-discovery/ta-p/3116984)
+
+---
+
+## 🔐 Authentication Phase
+
+Authentication typically occurs during the **Classification phase**, when probes like WMI (Windows) or SSH (Linux) are sent to gather OS-specific data. Credentials are validated at this point.
+
+🔗 [Credential Troubleshooting Guide](https://support.servicenow.com/kb?id=kb_article_view&sysparm_article=KB0657528)
+
+---
+
+## 🔥 Firewall Discovered as Network Switch
+
+This misclassification often happens due to SNMP OID mismatches or missing MIB files.
+
+### ✅ What to Do:
+- Check SNMP credentials and ensure correct OID mapping.
+- Add custom classifiers or update existing ones to properly identify firewalls.
+- Validate SNMPwalk results to confirm device identity.
+
+🔗 [Firewall Discovery Issues](https://www.servicenow.com/community/itom-forum/firewall-switch-discovery-issues/td-p/1017535)
+
+---
+
+## 🖥️ Windows Server Discovered as Computer
+
+This occurs when the OS version isn’t mapped in the classification rules.
+
+### ✅ Resolution:
+- Create or update classifiers for specific Windows Server versions.
+- Adjust the classifier order to ensure server-specific rules take precedence over generic ones.
+
+🔗 [Windows Server Classification Fix](https://support.servicenow.com/kb?id=kb_article_view&sysparm_article=KB1119932)
+
+---
+
+## 🌐 Required Ports for Discovery
+
+| Device Type     | Protocol | Port(s)        |
+|-----------------|----------|----------------|
+| Windows         | WMI      | 135, 49152–65535 |
+| Linux/Unix      | SSH      | 22             |
+| Network Devices | SNMP     | 161 (UDP)      |
+| Web Services    | HTTP/S   | 80, 443        |
+| SQL Server      | TCP      | 1433           |
+| Oracle DB       | TCP      | 1521           |
+
+🔗 [Port Requirements](https://www.servicenow.com/community/developer-forum/what-are-the-tcp-port-used-while-doing-a-discovery/m-p/3066630)
+
+---
+
+ 🧭 Service Mapping
+
+### 🔧 Prerequisites:
+- MID Server installed and running
+- Valid credentials (SSH, SNMP, WMI, etc.)
+- Discovery plugin enabled
+- Proper roles: `sm_admin`, `sm_user`, `sm_app_owner`
+
+🔗 [Service Mapping Setup Guide](https://www.servicenow.com/community/itom-articles/step-by-step-quick-guide-on-service-mapping-for-dummies/ta-p/2957101)
+
+### 🛠️ Methods Used:
+- **Top-down mapping**: Starts from entry point (URL) and traces dependencies.
+- **Tag-based mapping**: Uses cloud resource tags.
+- **Traffic-based mapping**: Uses network traffic to infer relationships.
+- **Service Mesh mapping**: For microservices environments.
+
+🔗 [Service Mapping Methods](https://www.servicenow.com/products/it-operations-management/what-is-service-mapping.html)
+
+---
+
+## 🔄 Traversal Rules
+
+Traversal rules define relationships between CIs during tag-based service mapping.
+
+### 📌 Usage:
+- Used in **tag-based mapping** to build service maps.
+- Define parent-child relationships (e.g., Linux Server → Storage Device).
+- Configured in the **Traversal Rules for Application Services** form.
+
+🔗 [Traversal Rules Documentation](https://www.servicenow.com/docs/bundle/washingtondc-it-operations-management/page/product/service-mapping/reference/traversal_rules_form_completion.html)
+
+---
+
+## 🧠 Agent Client Collector (ACC)
+
+### 🔍 How It Works:
+- Installed on target machines (Windows, Linux, macOS).
+- Collects system data and pushes it to ServiceNow via MID Server.
+- No need for credentials or IP scanning.
+
+### 🔗 Connection Process:
+- ACC agent connects to MID Server via WebSocket (port 8433).
+- Uses API keys for secure communication.
+- Data is sent to CMDB in a push-based model.
+
+🔗 [ACC Setup Guide](https://www.servicenow.com/community/itom-articles/discovery-with-agent-client-collector-step-by-step-configuration/ta-p/2324008)
+
+---
+
+## 🖥️ ACC on Multiple Instances
+
+ACC **cannot** be connected to multiple ServiceNow instances simultaneously. You must install separate agents for each instance or dedicate specific hosts for testing.
+
+🔗 [ACC Multi-Instance Limitation](https://support.servicenow.com/kb?id=kb_article_view&sysparm_article=KB1162869)
+
+---
+
+## ⚔️ ACC vs Horizontal Discovery
+
+| Feature                  | ACC                            | Horizontal Discovery           |
+|--------------------------|--------------------------------|--------------------------------|
+| Type                     | Agent-based                    | Agentless                     |
+| Security                 | No credentials needed          | Requires credentials          |
+| Data Collection          | Push-based                     | Pull-based                    |
+| Coverage                 | Endpoints, workstations        | Servers, network devices      |
+| Service Mapping Support  | Limited                        | Full support                  |
+
+🔗 [ACC vs Horizontal Discovery](https://www.servicenow.com/community/itom-forum/agent-client-collector-vs-horizontal-discovery/m-p/2878272)
+
+---
+
+🧩 UI Policy vs Client Script
+
+| Feature               | UI Policy                        | Client Script                   |
+|----------------------|----------------------------------|----------------------------------|
+| Coding Required      | No                               | Yes (JavaScript)                |
+| Trigger Events       | onLoad, onChange                 | onLoad, onChange, onSubmit      |
+| Use Case             | Field visibility, mandatory      | Complex logic, validation       |
+| Execution Order      | After Client Script              | Before UI Policy                |
+| Access to Old Value  | No                               | Yes (onChange)                  |
+
+🔗 [UI Policy vs Client Script Comparison](https://www.servicenow.com/community/developer-forum/client-script-vs-ui-policy-explained/m-p/3040372)
+
+---
+
+Would you like me to compile this into a formatted study guide or prep sheet?
