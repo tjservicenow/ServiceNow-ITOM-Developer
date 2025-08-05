@@ -18,7 +18,7 @@ There are **four main phases**:
 🔗 [Discovery Phases Explained](https://www.servicenow.com/community/itom-articles/understand-phases-of-discovery/ta-p/3116984)
 
 ---
-# Which phase do authentication happen
+# Which phase do authentication happen?
 ## 🔐 Authentication Phase
 
 Authentication typically occurs during the **Classification phase**, when probes like WMI (Windows) or SSH (Linux) are sent to gather OS-specific data. Credentials are validated at this point.
